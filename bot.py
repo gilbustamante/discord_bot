@@ -28,5 +28,13 @@ async def on_ready():
 #        print(f"{self.user} has connected to Discord")
 #client = CustomClient()
 
+@client.event
+async def on_message(message):
+    """Respond to 'ping' with 'pong' message"""
+    if message.author == client.user:
+        return
+    if message.content == 'ping':
+        print(f"Received ping from user: {message.author}")
+        await message.channel.send('pong')
 
 client.run(TOKEN)
