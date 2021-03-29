@@ -9,6 +9,6 @@ Station](https://www.nasa.gov/mission_pages/station/main/index.html):
 ## Dependencies
 The bot requires the following Python modules:
 * `discord.py`
-* `dotenv`
+* `dotenv` (if storing discord token in environment variable)
 * `requests`
 * `reverse_geocoder`

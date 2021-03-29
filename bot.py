@@ -30,7 +30,7 @@ async def find_iss(ctx):
     fmt_position = (f"{position['name']}, {position['admin1']}")
     msg = f"""
     ```
-    Time: {time}
+    Time: {time} (UTC)
     Position:
         Latitude: {latitude}
         Longitude: {longitude}
