@@ -1,10 +1,12 @@
 """ISS Bot for Discord"""
 import os
 from datetime import datetime
+import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import reverse_geocoder as rg
 import requests
+from map import create_map_image
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -37,7 +39,9 @@ async def find_iss(ctx):
         Nearest City: {fmt_position}
     ```
     """
-    await ctx.send(msg)
+    create_map_image(longitude, latitude)
+    iss_map = discord.File('current.png')
+    await ctx.send(msg, file=iss_map)
 
 
 #@bot.event

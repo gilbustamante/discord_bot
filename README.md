@@ -5,6 +5,7 @@ Station](https://www.nasa.gov/mission_pages/station/main/index.html):
 * Current time in UTC
 * Current latitude and longitude of the ISS
 * Nearest city
+* Location plotted on a map
 
 ## Dependencies
 The bot requires the following Python modules:
