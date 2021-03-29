@@ -1,40 +1,49 @@
 """GW2 Bot for Discord"""
 import os
-import discord
+from discord.ext import commands
 from dotenv import load_dotenv
+import sys
+from datetime import datetime
+import random
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
-GUILD = os.getenv("DISCORD_GUILD")
 
 
-# Event handling with decorator:
-client = discord.Client()
+bot = commands.Bot(command_prefix="!")
 
-@client.event
+
+@bot.event
 async def on_ready():
     """Runs when bot connects to Discord"""
-    guild = discord.utils.get(client.guilds, name=GUILD)
-    print(
-        f"{client.user} is connected to:\n"
-        f"{guild.name} (id: {guild.id})"
-    )
-    members = "\n - ".join([member.name for member in guild.members])
-    print(f"Guild Members:\n - {members}")
+    print(f"{bot.user.name} has connected to Discord")
 
-# Event handling by subclassing 'Client'
-#class CustomClient(discord.Client):
-#    async def on_ready(self):
-#        print(f"{self.user} has connected to Discord")
-#client = CustomClient()
 
-@client.event
-async def on_message(message):
-    """Respond to 'ping' with 'pong' message"""
-    if message.author == client.user:
-        return
-    if message.content == 'ping':
-        print(f"Received ping from user: {message.author}")
-        await message.channel.send('pong')
+@bot.command(name="ping")
+async def ping_pong(ctx):
+    """Respond to Ping with Pong"""
+    response = "pong!"
+    await ctx.send(response)
 
-client.run(TOKEN)
+
+
+@bot.event
+async def on_error(event, *args, **kwargs):
+    """Handle errors"""
+    with open("err.log", "a") as f:
+        if event == 'on_message':
+            f.write(f"UNHANDLED MESSAGE ({datetime.now()}): {args[0]}\n"
+                    f"Exception info: {sys.exc_info()}\n")
+        else:
+            raise
+
+@bot.command(name="roll")
+async def roll_dice(ctx, number_of_dice: int, number_of_sides: int):
+    """Roll the dice!"""
+    dice = [
+        str(random.choice(range(1, number_of_sides + 1)))
+        for _ in range(number_of_dice)
+    ]
+    await ctx.send(', '.join(dice))
+
+bot.run(TOKEN)
