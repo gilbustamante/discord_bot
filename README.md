@@ -1,4 +1,6 @@
 # ISSBot
+![](https://i.imgur.com/vT5VzGT.png)
+
 A [Discord](https://discord.com/) bot that displays information about the
 [International Space
 Station](https://www.nasa.gov/mission_pages/station/main/index.html):
